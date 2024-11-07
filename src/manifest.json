@@ -12,7 +12,7 @@
         "https://*.replicon.com/*"
       ],
       "js": [
-        "lib/async.min.js",
+        "js/async.min.js",
         "script/main.js",
         "script/functions.js"
       ],

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This chrome extension is for collecting and remembering the working hours in Replicon.
+This chrome extension helps you collect the working hours in Replicon.
 
 ## How to Install
 

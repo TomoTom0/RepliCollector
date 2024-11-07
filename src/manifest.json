@@ -1,9 +1,12 @@
 {
-  "name": "Replicon Collect",
+  "name": "RepliCollector",
   "author": "TomoTomo",
   "version": "0.1",
   "manifest_version": 3,
   "icons": {
+    "16": "img/icon_replicollector@16.png",
+    "48": "img/icon_replicollector@48.png",
+    "128": "img/icon_replicollector@128.png"
   },
   "content_scripts": [
     {
@@ -37,5 +40,5 @@
   "action":{
     "default_popup": "script/popup.html"
   },
-  "description": "Support Replicon"
+  "description": "Help you to collect data from Replicon"
 }

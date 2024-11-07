@@ -1,0 +1,41 @@
+{
+  "name": "Replicon Collect",
+  "author": "TomoTomo",
+  "version": "0.1",
+  "manifest_version": 3,
+  "icons": {
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.replicon.com/*"
+      ],
+      "js": [
+        "lib/async.min.js",
+        "script/main.js",
+        "script/functions.js"
+      ],
+      "css": [
+        "css/bootstrap.min.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*.replicon.com/*"
+      ],
+      "resources": [
+        "img/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage", "activeTab", "scripting", "tabs"
+  ],
+  "action":{
+    "default_popup": "script/popup.html"
+  },
+  "description": "Support Replicon"
+}

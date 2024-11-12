@@ -19,7 +19,7 @@ window.onload = async () => {
         console.log("received message", message);
         const args = message.args;
         if (message.command === "collect") {
-            triggered_collect_hour(args.year, args.month);
+            triggered_collect_hour(args.date_start, args.date_end);
             sendResponse({close: true});
         } else if (message.command === "show") {
             console.log(args);
@@ -31,20 +31,21 @@ window.onload = async () => {
 
 //------------------------------------
 //         #  on click
-const triggered_collect_hour = async (year, month) => {
-    const hour_collector = new HourCollector(year, month, REPLICON_DOMAIN, GROUP_ID);
+const triggered_collect_hour = async (date_start, date_end) => {
+    const hour_collector = new HourCollector(date_start, date_end, REPLICON_DOMAIN, GROUP_ID);
     await hour_collector.collectHours();
-    const hours_info = hour_collector.hours_info;
-    console.log("response", hours_info);
+    const sum_hours = sumHours(hour_collector.hours_infos, date_start, date_end);
+    const hours_infos = hour_collector.hours_infos;
+    console.log(`Results: ${date_start} -- ${date_end}`, hours_infos, sum_hours);
 
-    const content = obtainMessage_hours(hours_info, year, month);
+    const content = obtainMessage_hours(sum_hours, date_start, date_end);
     alert(content);
     getSyncStorage("hour_collection").then(item => {
         let data = item.hour_collection;
         if (!data) data = {};
         const new_data = {
             ...data,
-            [`${year}-${month}`]: hour_collector.hours_info,
+            ...hours_infos,
         };
         setSyncStorage({ hour_collection: new_data });
     })

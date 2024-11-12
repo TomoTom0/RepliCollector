@@ -7,93 +7,33 @@
     <link rel="stylesheet" type="text/css" href="../script/popup.css">
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-
-        input {
-            margin-bottom: 10px;
-            padding: 5px;
-            width: 250px;
-        }
-        input.short {
-            width: 80px;
-        }
-
-        button:not(:has(img)) {
-            padding: 5px 10px;
-            background-color: #2c92ff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #013771;
-        }
-
-        .bordered {
-            border: 1px solid #ccc;
-            padding: 20px;
-            width: 300px;
-        }
-
-        .load {
-            height: 32px;
-        }
-
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .flex-load {
-            flex: 1;
-            padding: 5px;
-        }
-
-        .flex-button {
-            flex: 1;
-        }
-        .disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        button:has(img){
-            padding: 5px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-        }
-        button>img.mdi-pencil {
-            width: 20px;
-            height: 20px;
-            border: none !important;
-            background-image: url('../img/pencil.svg');
-        }
+        
     </style>
 </head>
 
 <body>
-    <h1>Popup</h1>
+    <h1>RepliCollector</h1>
     <div class="bordered">
-        
-
-        <div class="flex-container">
+        <div>
+            <input type="checkbox" id="check_singleMonth" aria-label="single month mode">
+            <label for="check_singleMonth">Single Month Mode</label>
+        </div>
+        <div class="area_date_input">
+            <label for="date_start">Start</label>
+            <input type="date" id="date_start" aria-label="calendar" required>
+        </div>
+        <div class="area_date_input">
+            <label for="date_end">End</label>
+            <input type="date" id="date_end" aria-label="calendar" required>
+        </div>
+        <!-- <div class="flex-container">
             <div class="flex-button">
                 <input type="number" id="year" inputmode="numeric" aria-label="year" required class="short">
             </div>
             <div class="flex-button">
                 <input type="number" id="month" inputmode="numeric" min="1" max="12" aria-label="month" required class="short">
             </div>
-        </div>
+        </div> -->
         <div class="flex-container">
             <div class="flex-button">
                 <button id="button_collectHours">Collect</button>

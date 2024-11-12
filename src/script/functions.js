@@ -16,30 +16,52 @@ const sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-const obtainMessage_hours = (hours_info, year, month) => {
-    let content = `    ${year}-${month}\n`;
+const obtainMessage_hours = (sum_hours, date_start, date_end) => {
+    let content = `    ${date_start} _ ${date_end}\n`;
     content += "---------\n";
-    let sum_hours = 0;
-    for (const charge_id of Object.keys(hours_info)) {
-        content += `${charge_id}: ${hours_info[charge_id].sum} hours\n`;
-        sum_hours += hours_info[charge_id].sum;
+    let sum_hour = 0;
+    for (const charge_id of Object.keys(sum_hours)) {
+        content += `${charge_id}: ${sum_hours[charge_id]} hours\n`;
+        sum_hour += sum_hours[charge_id];
     }
     content += "---------\n";
-    content += `Total: ${sum_hours} hours\n`;
+    content += `Total: ${sum_hour} hours\n`;
     content += "    See Developer Console";
     return content;
 }
+
+const sumHours = (hours_infos, date_start, date_end) => {
+    let sum_hours = {};
+    for (const year_month of Object.keys(hours_infos)) {
+        const hours_info = hours_infos[year_month];
+
+        for (const charge_id of Object.keys(hours_info)) {
+            for (const day of Object.keys(hours_info[charge_id].days)) {
+                const date_tmp_str = `${year_month}-${day}`;
+                const date_tmp = new Date(date_tmp_str);
+                if (date_tmp < new Date(date_start) || date_tmp > new Date(date_end)) {
+                    continue;
+                }
+                if (!sum_hours[charge_id]) sum_hours[charge_id] = 0;
+                sum_hours[charge_id] += hours_info[charge_id].days[day];
+
+            }
+            // hours_info[charge_id].sum = Object.values(hours_info[charge_id].days).reduce((a, b) => a + b, 0);
+        }
+    }        
+    return sum_hours;
+}
 class HourCollector {
-    constructor(year, month, replicon_domain, group_id) {
-        this.year = year;
-        this.month = month;
+    constructor(date_start, date_end, replicon_domain, group_id) {
+        this.date_start = date_start;
+        this.date_end = date_end;
         this.replicon_domain = replicon_domain;
         this.group_id = group_id;
-        this.hours_info = {};
+        this.hours_infos = {};
         this.dic_hours = {};
     }
 
-    async collectHours() {
+    async _collectHours() {
         const days = [1, 8, 15, 22, 29];
         for (const day of days) {
             await this._obtainHoursFromReplicon(day);
@@ -50,10 +72,23 @@ class HourCollector {
             if (!hours_info[charge_id]) hours_info[charge_id] = {};
             hours_info[charge_id].days=this.dic_hours[charge_id]
         }
-        for (const charge_id of Object.keys(hours_info)) {
-            hours_info[charge_id].sum = Object.values(hours_info[charge_id].days).reduce((a, b) => a + b, 0);
+        // for (const charge_id of Object.keys(hours_info)) {
+        //     hours_info[charge_id].sum = Object.values(hours_info[charge_id].days).reduce((a, b) => a + b, 0);
+        // }
+        this.hours_infos[year_month] = hours_info;
+    }
+
+    async collectHours(){
+        const date_start = new Date(this.date_start);
+        const date_end = new Date(this.date_end);
+        this.year = date_start.getFullYear();
+        this.month = date_start.getMonth() + 1;
+        while (date_start < date_end) {
+            await this._collectHours();
+            date_start.setMonth(date_start.getMonth() + 1);
+            this.year = date_start.getFullYear();
+            this.month = date_start.getMonth() + 1;
         }
-        this.hours_info = hours_info;
     }
 
     async _obtainHoursFromReplicon(day) {

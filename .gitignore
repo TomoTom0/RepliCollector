@@ -4,6 +4,7 @@
 ignore*
 escape/*
 vue-popup/
+*:Zone.Identifier
 
 #################### ExtJs.gitignore ####################
 

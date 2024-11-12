@@ -20,7 +20,6 @@
         "script/functions.js"
       ],
       "css": [
-        "css/bootstrap.min.css"
       ]
     }
   ],

@@ -1,15 +1,80 @@
-/* @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
 
-    100% {
-        transform: rotate(360deg);
-    }
-} */
+h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+input.short {
+    width: 80px;
+}
+
+button:not(:has(img)) {
+    padding: 5px 10px;
+    background-color: #2c92ff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #013771;
+}
+
+.bordered {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+}
+
+.load {
+    height: 32px;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.flex-load {
+    flex: 1;
+    padding: 5px;
+}
+
+.flex-button {
+    flex: 1;
+}
+.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+button:has(img){
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+button>img.mdi-pencil {
+    width: 20px;
+    height: 20px;
+    border: none !important;
+    background-image: url('../img/pencil.svg');
+}
 
 button {
     transition: 0.2s ease-in-out;
+}
+
+div.area_date_input label{
+    width: 50px;
 }
 
 /* .loading {

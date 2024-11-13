@@ -6,6 +6,8 @@ This chrome extension helps you collect the working hours in Replicon.
 
 ## How to Install
 
+<img src="./img/tutorial_manually-install-chrome-extension.png" max-height="30vh" max-width="80vw">
+
 1. Download or Clone this repository, and unzip it if necessary.
 2. Go to `chrome://extensions/`, and enable `Developer mode`.
 3. Push `Load unpacked` button, and select the `src` folder in the unzipped folder.

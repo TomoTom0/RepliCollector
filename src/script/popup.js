@@ -93,11 +93,11 @@ window.onload = async function () {
             await getSyncStorage("hour_collection").then(item => {
                 const data = item.hour_collection;
                 if (!data) data = {};
-                const sum_hours = sumHours(data, date_start, date_end);
+                const [sum_hours, related_hours_infos] = sumHours(data, date_start, date_end);
                 // const hours_info = data[`${year}-${month}`] || {};
                 const content = obtainMessage_hours(sum_hours, date_start, date_end).replace(/\n/g, "<br>");
                 div_result.innerHTML = content;
-                send_message({command:"show", args:{ date_start, date_end, sum_hours }});
+                send_message({command:"show", args:{ date_start, date_end, sum_hours, related_hours_infos }});
             });
         }
     });

@@ -32,14 +32,21 @@ const obtainMessage_hours = (sum_hours, date_start, date_end) => {
 
 const sumHours = (hours_infos, date_start, date_end) => {
     let sum_hours = {};
+    const obj_date_start = new Date(date_start);
+    const obj_date_end = new Date(date_end);
+    let related_hours_infos = {};
     for (const year_month of Object.keys(hours_infos)) {
+        if (new Date(year_month) < obj_date_start || new Date(year_month) > obj_date_end) {
+            continue;
+        }
         const hours_info = hours_infos[year_month];
+        related_hours_infos[year_month] = hours_info;
 
         for (const charge_id of Object.keys(hours_info)) {
             for (const day of Object.keys(hours_info[charge_id].days)) {
                 const date_tmp_str = `${year_month}-${day}`;
                 const date_tmp = new Date(date_tmp_str);
-                if (date_tmp < new Date(date_start) || date_tmp > new Date(date_end)) {
+                if (date_tmp < obj_date_start || date_tmp > obj_date_end) {
                     continue;
                 }
                 if (!sum_hours[charge_id]) sum_hours[charge_id] = 0;
@@ -49,7 +56,7 @@ const sumHours = (hours_infos, date_start, date_end) => {
             // hours_info[charge_id].sum = Object.values(hours_info[charge_id].days).reduce((a, b) => a + b, 0);
         }
     }        
-    return sum_hours;
+    return [sum_hours, related_hours_infos];
 }
 class HourCollector {
     constructor(date_start, date_end, replicon_domain, group_id) {

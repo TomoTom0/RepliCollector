@@ -16,7 +16,7 @@ window.onload = async () => {
 
 
     chrome.runtime.onMessage.addListener(async (message, _ev, sendResponse) => {
-        console.log("received message", message);
+        // console.log("received message", message);
         const args = message.args;
         if (message.command === "collect") {
             triggered_collect_hour(args.date_start, args.date_end);
@@ -34,9 +34,10 @@ window.onload = async () => {
 const triggered_collect_hour = async (date_start, date_end) => {
     const hour_collector = new HourCollector(date_start, date_end, REPLICON_DOMAIN, GROUP_ID);
     await hour_collector.collectHours();
-    const sum_hours = sumHours(hour_collector.hours_infos, date_start, date_end);
+    const [sum_hours, related_hours_infos] = sumHours(hour_collector.hours_infos, date_start, date_end);
     const hours_infos = hour_collector.hours_infos;
     console.log(`Results: ${date_start} -- ${date_end}`, hours_infos, sum_hours);
+    console.log(related_hours_infos);
 
     const content = obtainMessage_hours(sum_hours, date_start, date_end);
     alert(content);
